@@ -2,10 +2,10 @@
 <h4>Your home appliances : </h4>
 <div style="width: 100px;">
   <a routerLink="washingmachine" class="h-25%">
-    <img src="assets/laundry.png" [ngClass]="{'bg-success': washingMachineDone , 'bg-danger': !washingMachineDone }" width=100%>
+    <img src="assets/laundry.png" [ngClass]="{'bg-success': done , 'bg-danger': !done }" width=100%>
   </a>
   <p>Time Left : {{ washingMachineTimeLeft }}</p>
-  <button class="btn btn-success mt-1" (click)='washingMachine()'>Done ! </button>
+  <button class="btn btn-success mt-1" (click)='launchTimer()' [disabled]='done'>Done ! </button>
 </div>
 
 <div>
