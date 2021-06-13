@@ -1,13 +1,31 @@
 <h1>Homie</h1>
 <h4>Your home appliances : </h4>
-<div style="width: 100px;">
-  <a routerLink="washingmachine" class="h-25%">
-    <img src="assets/laundry.png" [ngClass]="{'bg-success': done , 'bg-danger': !done }" width=100%>
-  </a>
-  <p>Time Left : {{ washingMachineTimeLeft }}</p>
-  <button class="btn btn-success mt-1" (click)='launchTimer()' [disabled]='done'>Done ! </button>
+<div class="d-flex justify-content-center flex-row">
+  <div class="d-flex justify-content-center flex-column" style="width: 150px; height: 200px; margin-right: 36px;">
+    <div style="width: 100px;">
+      <a routerLink="washingmachine" class="h-25%">
+        <img src="assets/laundry.png" [ngClass]="{'bg-success': wmDone , 'bg-danger': !wmDone }" width=100%>
+      </a>
+    </div>
+    <button class="btn btn-success mt-1" (click)='wmLaunchTimer()' [disabled]='wmDone'>Done ! </button>
+  </div>
+  <div class="d-flex justify-content-center flex-column" style="width: 150px; height: 200px; margin-right: 36px;">
+    <div style="width: 100px;">
+      <a routerLink="dishwashingmachine" class="h-25%">
+        <img src="assets/dish_washing.png" [ngClass]="{'bg-success': dwmDone , 'bg-danger': !dwmDone }" width=100%>
+      </a>
+    </div>
+    <button class="btn btn-success mt-1" (click)='dwmLaunchTimer()' [disabled]='dwmDone'>Done ! </button>
+  </div>
+  <div class="d-flex justify-content-center flex-column" style="width: 150px; height: 200px; margin-right: 36px;">
+    <div style="width: 100px;">
+      <a routerLink="fridge" class="h-25%">
+        <img src="assets/fridge.png" [ngClass]="{'bg-success': fDone , 'bg-danger': !fDone }" width=100%>
+      </a>
+    </div>
+    <button class="btn btn-success mt-1" (click)='fLaunchTimer()' [disabled]='fDone'>Done ! </button>
+  </div>
 </div>
-
 <div>
   <button class="btn btn-secondary mt-3" routerLink='/'> Back </button>
 </div>
