@@ -12,17 +12,17 @@ export class AppliancesService{
   public notificationsTiming: string[] = [];
 
   //Washing Machine Parameters
-  public wmTimeNeeded : number = 12000;
+  public wmTimeNeeded : number = 5000;
   public wmStatus : string | null = "false";
   public wmTimerStartedOn : number | null = null;
 
   //Dish Washing Machine Parameters
-  public dwmTimeNeeded : number = 12000;
+  public dwmTimeNeeded : number = 10000;
   public dwmStatus : string | null = "false";
   public dwmTimerStartedOn : number | null = null;
 
   //Fridge Parameters
-  public fTimeNeeded : number = 12000;
+  public fTimeNeeded : number = 15000;
   public fStatus : string | null = "false";
   public fTimerStartedOn : number | null = null;
 
@@ -48,25 +48,6 @@ export class AppliancesService{
       localStorage.setItem("fStatus","false");
     }
 
-    //get time variables from local storage
-    if(localStorage.getItem("wmTimerStartedOn") !== null){
-      this.wmTimerStartedOn=parseFloat(localStorage.getItem("wmTimerStartedOn"));
-    }
-    if(localStorage.getItem("dwmTimerStartedOn") !== null){
-      this.dwmTimerStartedOn=parseFloat(localStorage.getItem("dwmTimerStartedOn"));
-    }
-    if(localStorage.getItem("fTimerStartedOn") !== null){
-      this.fTimerStartedOn=parseFloat(localStorage.getItem("fTimerStartedOn"));
-    }
-    console.log(this.wmTimerStartedOn);
-    console.log(this.dwmTimerStartedOn);
-    console.log(this.fTimerStartedOn);
-
-    //resume timers if task time has not passed yet
-    this.wmResumeTimer();
-    this.dwmResumeTimer();
-    this.fResumeTimer();
-
     //get notifications and notifications timing from local storage
     if(localStorage.getItem("Notifications") !== null){
       this.notifications=JSON.parse(localStorage.getItem("Notifications"));
@@ -77,6 +58,25 @@ export class AppliancesService{
     }
     console.log(localStorage.getItem("NotificationsTiming"));
 
+    //get time variables from local storage
+    if(localStorage.getItem("wmTimerStartedOn") !== null){
+      this.wmTimerStartedOn=parseFloat(localStorage.getItem("wmTimerStartedOn"));
+      //resume timer if task time has not passed yet
+      this.wmResumeTimer();
+    }
+    if(localStorage.getItem("dwmTimerStartedOn") !== null){
+      this.dwmTimerStartedOn=parseFloat(localStorage.getItem("dwmTimerStartedOn"));
+      //resume timer if task time has not passed yet
+      this.dwmResumeTimer();
+    }
+    if(localStorage.getItem("fTimerStartedOn") !== null){
+      this.fTimerStartedOn=parseFloat(localStorage.getItem("fTimerStartedOn"));
+      //resume timer if task time has not passed yet
+      this.fResumeTimer();
+    }
+    console.log(this.wmTimerStartedOn);
+    console.log(this.dwmTimerStartedOn);
+    console.log(this.fTimerStartedOn);
   }
 
   public wmResumeTimer(){
@@ -85,10 +85,10 @@ export class AppliancesService{
         this.wmStatus = "false";
         localStorage.setItem("wmStatus","false");
         this.emit_wm_Status.emit(this.wmStatus==="true");
-        //SHOULD ADD NOTIFICATION + TIMING TO THE ARRAY HERE, AND ALSO MOVE LINES 71 -> 78 IN ONE
-        //OF THESE FUNCTIONS SO WE GET THE LATEST VERSION OF NOTIFICATIONS ON STARTUP (SHOULD BE
-        //IN THE LAST CALLED FUNCTION UPON THESE 3 RESUMETIMER FUNCTIONS)
-        //remark: notifications are going to need sorting afterwards !!!
+        //SHOULD ADD NOTIFICATION + TIMING TO THE ARRAY HERE
+        //remark: notifications are going to need sorting afterwards if the right time they were emitted at
+        //is calculated. For now, they have the time the user reconnects at !!!
+        this.adddNotification("Clean the filter !!!");
       } else {
       setTimeout(() => {
         this.wmStatus = "false";
@@ -105,6 +105,7 @@ export class AppliancesService{
       this.dwmStatus = "false";
       localStorage.setItem("dwmStatus","false");
       this.emit_dwm_Status.emit(this.dwmStatus==="true");
+      this.adddNotification("Remove the dishes !!!");
     } else {
       setTimeout(() => {
         this.dwmStatus = "false";
@@ -121,6 +122,7 @@ export class AppliancesService{
       this.fStatus = "false";
       localStorage.setItem("fStatus","false");
       this.emit_f_Status.emit(this.fStatus==="true");
+      this.adddNotification("Clean the fridge !!!");
     } else {
       setTimeout(() => {
         this.fStatus = "false";
@@ -156,13 +158,13 @@ export class AppliancesService{
     return this.notificationsTiming;
   }
 
-  public adddNotification( message : string ) : void {
+  public adddNotification( message : string, date : string = new Date().toUTCString()) : void {
     //SHOULD ADD A FATE ARGUMENT SO A NOTIFICATION CAN BE TIMESTAMPED WITH THE RIGHT DATE
     //IF TASK WAS COMPLETED BUT USER WAS NOT CONNECTED DURING TIME OF COMPLETION (NOTIFICATIONS ARE
     //ADDED TO LOCAL STORAGE AFTER THE USER RECONNECTS, I.E. IF WE TIMESTAMP THE NOTIFICATIONS
     //WITH CURRENT DATE IT IS ERRONEOUS)
     this.notifications.unshift(message);
-    this.notificationsTiming.unshift(`${new Date().toUTCString()}`);
+    this.notificationsTiming.unshift(date);
     //change the variable set for the notifications array in localStorage each time a notification is pushed
     //same for notifications timestamps
     //this is not optimal behavior => an update will come soon as I start optimizing the code (same for
