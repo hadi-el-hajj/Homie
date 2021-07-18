@@ -1,15 +1,18 @@
-<h4 style="text-align: center;">Your Notifications : </h4>
-<div class="d-flex flex-row justify-content-center">
-  <div class ="d-flex flex-column" style="margin-right: 18px;">
-    <div *ngFor="let notification of notifications">
-      {{ notification }}
+<div class="d-flex flex-column justify-content-center" style="text-align: center;">
+  <h4 style="text-align: center;">Your Notifications : </h4>
+  <div class="d-flex flex-row justify-content-center">
+    <div class ="d-flex flex-column" style="margin-right: 18px;">
+      <div *ngFor="let notification of notifications">
+        {{ notification }}
+      </div>
+    </div>
+    <div class ="d-flex flex-column">
+      <div *ngFor="let timing of notificationsTiming" class="d-flex flex-column">
+        {{ timing }}
+      </div>
     </div>
   </div>
-  <div class ="d-flex flex-column">
-    <div *ngFor="let timing of notificationsTiming" class="d-flex flex-column">
-      {{ timing }}
-    </div>
+  <div>
+    <button class="btn btn-secondary mt-3" routerLink=''> Back </button>
   </div>
 </div>
-
-
