@@ -15,8 +15,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public resetApplication() {
+  public async resetApplication() {
     localStorage.clear();
+    await location.reload();
+    alert("Application has been reset ! All your notifications and ongoing tasks are gone ! POUF !")
   }
 
 }

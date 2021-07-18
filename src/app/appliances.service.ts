@@ -89,12 +89,15 @@ export class AppliancesService{
         //remark: notifications are going to need sorting afterwards if the right time they were emitted at
         //is calculated. For now, they have the time the user reconnects at !!!
         this.adddNotification("Clean the filter !!!");
+        //reset TimerStartedOnVariable to avoid calling resume timer again even when the machine is done
+        localStorage.removeItem("wmTimerStartedOn");
       } else {
       setTimeout(() => {
         this.wmStatus = "false";
         localStorage.setItem("wmStatus","false");
         this.emit_wm_Status.emit(this.wmStatus==="true");
         this.adddNotification("Clean the filter !!!");
+        localStorage.removeItem("wmTimerStartedOn");
       }, this.wmTimeNeeded - timeElapsed);
     }
   }
@@ -106,29 +109,33 @@ export class AppliancesService{
       localStorage.setItem("dwmStatus","false");
       this.emit_dwm_Status.emit(this.dwmStatus==="true");
       this.adddNotification("Remove the dishes !!!");
+      localStorage.removeItem("dwmTimerStartedOn");
     } else {
       setTimeout(() => {
         this.dwmStatus = "false";
         localStorage.setItem("dwmStatus","false");
         this.emit_dwm_Status.emit(this.dwmStatus==="true");
         this.adddNotification("Remove the dishes !!!");
+        localStorage.removeItem("dwmTimerStartedOn");
       }, this.dwmTimeNeeded - timeElapsed);
     }
   }
 
   public fResumeTimer(){
     let timeElapsed = new Date().getTime() - this.fTimerStartedOn;
-    if (timeElapsed > this.fTimeNeeded) {
+    if (timeElapsed > this.fTimeNeeded ) {
       this.fStatus = "false";
       localStorage.setItem("fStatus","false");
       this.emit_f_Status.emit(this.fStatus==="true");
       this.adddNotification("Clean the fridge !!!");
+      localStorage.removeItem("fTimerStartedOn");
     } else {
       setTimeout(() => {
         this.fStatus = "false";
         localStorage.setItem("fStatus","false");
         this.emit_f_Status.emit(this.fStatus==="true");
         this.adddNotification("Clean the fridge !!!");
+        localStorage.removeItem("fTimerStartedOn");
       }, this.fTimeNeeded - timeElapsed);
     }
   }
@@ -182,6 +189,7 @@ export class AppliancesService{
       localStorage.setItem("wmStatus","false");
       this.emit_wm_Status.emit(this.wmStatus==="true");
       this.adddNotification("Clean the filter !!!");
+      localStorage.removeItem("wmTimerStartedOn");
     }, this.wmTimeNeeded);
   }
 
@@ -194,6 +202,7 @@ export class AppliancesService{
       localStorage.setItem("dwmStatus","false");
       this.emit_dwm_Status.emit(this.dwmStatus==="true");
       this.adddNotification("Remove the dishes !!!");
+      localStorage.removeItem("dwmTimerStartedOn");
     }, this.dwmTimeNeeded);
   }
 
@@ -206,6 +215,7 @@ export class AppliancesService{
       localStorage.setItem("fStatus","false");
       this.emit_f_Status.emit(this.fStatus==="true");
       this.adddNotification("Clean the fridge !!!");
+      localStorage.removeItem("fTimerStartedOn");
     }, this.fTimeNeeded);
   }
 }

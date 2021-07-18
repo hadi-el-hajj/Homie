@@ -1,12 +1,17 @@
-<h1>Welcome to Homie !</h1>
-<h4>What is Homie ?</h4>
+<div class="d-flex flex-column justify-content-center" style="text-align: center;">
+  <h3>Welcome to Homie !</h3>
+  <h4>What is Homie ?</h4>
 
-<p>Homie is your digital housekeeper ! <br> Reminds you of the chores you forget to do most of the times, and pings
-  you when a new chore is ready to be done ! <br> You can also see it as your digital mother ;)
-</p>
+  <p>Homie is your digital housekeeper ! <br> Reminds you of the chores you forget to do most of the times, and pings
+    you when a new chore is ready to be done ! <br> You can also see it as your digital mother ;)
+  </p>
 
-<button class="btn btn-primary" routerLink="/appliances" style="margin-right: 18px;"> Start now ! </button>
-<button class="btn btn-primary" routerLink="/notifications" style="margin-right: 18px;"> Check your notifications ! </button>
-<button class="btn btn-danger" (click)=resetApplication()> Reset Application * </button>
-<p class="text-danger font-weight-bold"> * Please refresh your application upon reset </p>
+  <div class="d-flex flex-row justify-content-center">
+    <button class="btn btn-primary" routerLink="/appliances" style="margin-right: 18px;"> Start now ! </button>
+    <button class="btn btn-primary" routerLink="/notifications" style="margin-right: 18px;"> Check your notifications ! </button>
+    <button class="btn btn-danger" (click)=resetApplication()> Reset Application * </button>
+  </div>
+
+  <p class="text-danger font-weight-bold"> * Please refresh your application upon reset </p>
+</div>
 
